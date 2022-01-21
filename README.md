@@ -1,3 +1,11 @@
+React Homework №3, task № 2  goit-react-hw-03-image-finder
+
+https://itfreshman2021.github.io/goit-react-hw-03-image-finder/
+
+
+=================================================================================================================================================================================
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
