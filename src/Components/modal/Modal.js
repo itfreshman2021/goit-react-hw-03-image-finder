@@ -7,6 +7,12 @@ import s from './Modal.module.css';
 const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends React.Component {
+  static propTypes = {
+    onClose: PropTypes.func.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
   }
@@ -39,10 +45,5 @@ class Modal extends React.Component {
     );
   }
 }
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  largeImageURL: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-};
 
 export default Modal;

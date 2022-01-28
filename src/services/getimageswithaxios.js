@@ -3,9 +3,15 @@ import axios from 'axios';
 export async function getImagesWithAxios(config) {
   try {
     const response = await axios(config);
-    const dataImages = response.data.hits;
+    const dataImagesArreys = response.data.hits;
+    const dataImages = dataImagesArreys.map(({ id, webformatURL, largeImageURL, tags }) => ({
+      id,
+      webformatURL,
+      largeImageURL,
+      tags,
+    }));
 
-    if (dataImages.length === 0) {
+    if (dataImagesArreys.length === 0) {
       alert('Sorry, there are no images matching your search query. Please try again.');
       return;
     }

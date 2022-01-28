@@ -4,3 +4,17 @@
   grid-gap: 16px;
   padding-bottom: 24px;
 }
+
+.Loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
