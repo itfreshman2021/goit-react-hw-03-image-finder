@@ -12,7 +12,7 @@ class App extends React.Component {
     searchName: '',
     page: 1,
     dataImages: [],
-    status: 'idle',
+    isLoading: false,
     showModal: false,
     largeImageURL: '',
     alt: '',
@@ -39,14 +39,9 @@ class App extends React.Component {
 
     if (prevSearchName !== nextSearchName || prevPage !== nextPage) {
       getImagesWithAxios(config).then(dataImages => {
-        if (!dataImages) {
-          this.setState({ status: 'idle' });
-          return;
-        }
-
         this.setState(prevState => ({
           dataImages: [...prevState.dataImages, ...dataImages],
-          status: 'resolved',
+          isLoading: false,
         }));
         if (nextPage > prevPage && prevSearchName === nextSearchName) {
           const { height: cardHeight } = document
@@ -67,13 +62,14 @@ class App extends React.Component {
       page: 1,
       dataImages: [],
       showModal: false,
-      status: 'pending',
+      isLoading: true,
     });
   };
 
   onButtonLoadMoreClick = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
+      isLoading: true,
     }));
   };
   togleModal = () => {
@@ -92,18 +88,18 @@ class App extends React.Component {
   };
 
   render() {
-    const { dataImages, status, showModal, largeImageURL, alt } = this.state;
+    const { dataImages, isLoading, showModal, largeImageURL, alt } = this.state;
     const { handleFormSubmit, onButtonLoadMoreClick, togleModal, handleModalImage } = this;
     return (
       <div className={s.App}>
         <Searchbar onSubmit={handleFormSubmit} />
-        {status === 'pending' && (
+        {isLoading && (
           <div className={s.Loader}>
             <Watch color="#00BFFF" height={80} width={80} />
           </div>
         )}
         {showModal && <Modal onClose={togleModal} largeImageURL={largeImageURL} alt={alt} />}
-        {status === 'resolved' && (
+        {dataImages.length > 0 && (
           <>
             <ImageGallery onClick={handleModalImage} dataImages={dataImages} />
             <div className={s.Btn}>

@@ -6,10 +6,10 @@
 }
 
 .Loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .Btn {
