@@ -38,37 +38,37 @@ class App extends React.Component {
     const nextPage = this.state.page;
 
     if (prevSearchName !== nextSearchName || prevPage !== nextPage) {
-      this.setState({ status: 'pending' });
-
       getImagesWithAxios(config).then(dataImages => {
         if (!dataImages) {
           this.setState({ status: 'idle' });
           return;
         }
 
-        // if (prevSearchName === nextSearchName) {
         this.setState(prevState => ({
           dataImages: [...prevState.dataImages, ...dataImages],
           status: 'resolved',
         }));
-        if (nextPage - prevPage) {
+        if (nextPage > prevPage && prevSearchName === nextSearchName) {
           const { height: cardHeight } = document
             .querySelector('#ul1')
-            .firstElementChild.getBoundingClientRect();
+            .lastElementChild.getBoundingClientRect();
           window.scrollBy({
-            top: cardHeight * 4 * (nextPage - 1.5),
+            top: cardHeight * 2,
             behavior: 'smooth',
           });
         }
-        // } else {
-        //   this.setState({ dataImages, status: 'resolved' });
-        // }
       });
     }
   }
 
   handleFormSubmit = searchName => {
-    this.setState({ searchName: searchName, page: 1, dataImages: [] });
+    this.setState({
+      searchName: searchName,
+      page: 1,
+      dataImages: [],
+      showModal: false,
+      status: 'pending',
+    });
   };
 
   onButtonLoadMoreClick = () => {
