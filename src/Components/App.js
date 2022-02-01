@@ -39,6 +39,10 @@ class App extends React.Component {
 
     if (prevSearchName !== nextSearchName || prevPage !== nextPage) {
       getImagesWithAxios(config).then(dataImages => {
+        if (!dataImages) {
+          this.setState({ isLoading: false });
+          return;
+        }
         this.setState(prevState => ({
           dataImages: [...prevState.dataImages, ...dataImages],
           isLoading: false,
@@ -102,9 +106,11 @@ class App extends React.Component {
         {dataImages.length > 0 && (
           <>
             <ImageGallery onClick={handleModalImage} dataImages={dataImages} />
-            <div className={s.Btn}>
-              <Button onButtonLoadMoreClick={onButtonLoadMoreClick} />
-            </div>
+            {!isLoading && (
+              <div className={s.Btn}>
+                <Button onButtonLoadMoreClick={onButtonLoadMoreClick} />
+              </div>
+            )}
           </>
         )}
       </div>
